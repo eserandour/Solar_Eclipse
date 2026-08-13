@@ -1,6 +1,10 @@
 # Solar_Eclipse
 Recadre et aligne une série de photos d'éclipse solaire pour que le disque solaire (entier ou partiellement masqué par la Lune) soit toujours centré et à la même taille apparente sur toutes les images. Permet ensuite de créer un time-lapse.
 
+# Installation
+
+Le programme a besoin des bibliothèques Python suivantes : python3-opencv et python3-odf
+
 # Utilisation en 3 étapes
 
 <b>python3 eclipse_align.py preview --input photos/ --output apercu/</b><br>
