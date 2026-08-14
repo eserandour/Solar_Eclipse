@@ -12,5 +12,6 @@ Corriger apercu/detections.ods si besoin (avec LibreOffice Calc).<br>
 On peut utiliser Gimp pour calculer les coordonnées du disque solaire sur l'image.
 
 <b>python3 eclipse_align.py process --input photos/ --output alignees/ --detections apercu/detections.ods</b>
+Options : --flip-horizontal --rotate90-cw
 
 <b>python3 eclipse_align.py video --input alignees/ --output eclipse.mp4 --fps 6</b>
