@@ -783,9 +783,29 @@ def cmd_process(args):
         cx, cy, r = valid[f.name]
         scale = target_r / r
 
+        # Transformation linéaire combinée (rotation puis flip), appliquée
+        # autour du centre détecté (cx, cy) puis mise à l'échelle. L'ordre
+        # est fixe : rotation 90° horaire d'abord, puis flip horizontal
+        # ensuite (cohérent avec le fait qu'une rotation seule ne change
+        # jamais le sens horaire/antihoraire apparent : c'est le flip qui
+        # inverse ce sens, la rotation ne fait que réorienter le cadre).
+        #
+        # Convention image (x vers la droite, y vers le bas) :
+        #   rotation 90° horaire : (dx, dy) -> (-dy, dx)
+        #   flip horizontal      : (dx, dy) -> (-dx, dy)
+        L = np.eye(2)
+        if args.rotate90_cw:
+            L = np.array([[0.0, -1.0], [1.0, 0.0]]) @ L
+        if args.flip_horizontal:
+            L = np.array([[-1.0, 0.0], [0.0, 1.0]]) @ L
+
+        lin = scale * L
+        c_vec = np.array([cx, cy])
+        t = np.array([canvas_w / 2, canvas_h / 2]) - lin @ c_vec
+
         M = np.array([
-            [scale, 0, canvas_w / 2 - scale * cx],
-            [0, scale, canvas_h / 2 - scale * cy],
+            [lin[0, 0], lin[0, 1], t[0]],
+            [lin[1, 0], lin[1, 1], t[1]],
         ], dtype=np.float64)
 
         interp = cv2.INTER_LANCZOS4 if scale > 1 else cv2.INTER_AREA
@@ -972,6 +992,23 @@ def build_parser():
                               "en fraction du rayon solaire (défaut : 0.5). "
                               "Ignoré si --canvas est fourni.")
     p_proc.add_argument("--quality", type=int, default=95, help="Qualité JPEG (0-100)")
+    p_proc.add_argument("--flip-horizontal", action="store_true",
+                         help="Inverse horizontalement (miroir) le disque solaire "
+                              "dans les images générées, par ex. pour corriger "
+                              "l'image miroir produite par un renvoi coudé. "
+                              "L'horodatage affiché en bas reste lisible "
+                              "normalement (non mirroré).")
+    p_proc.add_argument("--rotate90-cw", action="store_true",
+                         help="Fait pivoter le disque solaire de 90° dans le "
+                              "sens horaire dans les images générées. Seule, "
+                              "cette option ne change pas le sens horaire/"
+                              "antihoraire apparent de la rotation du "
+                              "croissant (une rotation ne fait que réorienter "
+                              "le cadre) ; combinez-la avec --flip-horizontal "
+                              "si vous devez aussi corriger ce sens. Quand les "
+                              "deux options sont utilisées ensemble, la "
+                              "rotation est appliquée avant le flip. "
+                              "L'horodatage reste lisible normalement.")
     p_proc.set_defaults(func=cmd_process)
 
     p_vid = sub.add_parser("video", help="Assembler les images alignées en vidéo")
