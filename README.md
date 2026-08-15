@@ -11,7 +11,7 @@ Les photos sont à ranger dans un répertoire "photos".
 
 <b>python3 eclipse_align.py preview --input photos/ --output apercu/</b><br>
 Corriger apercu/detections.ods si besoin (avec LibreOffice Calc).<br>
-On peut utiliser Gimp pour calculer les coordonnées du disque solaire sur l'image.
+On peut utiliser Gimp pour calculer à la main les coordonnées du disque solaire sur l'image.
 
 <b>python3 eclipse_align.py process --input photos/ --output alignees/ --detections apercu/detections.ods</b><br>
 Options : --flip-horizontal --rotate90-cw
