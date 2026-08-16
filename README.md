@@ -5,7 +5,7 @@ Recadre et aligne une série de photos d'éclipse solaire pour que le disque sol
 
 Le programme a besoin des bibliothèques Python suivantes : python3-opencv, python3-numpy, python3-pil, python3-odf.
 
-Les photos sont à ranger dans un répertoire "photos".
+Les photos sont à placer dans un répertoire nommé "photos", situé au même emplacement que le fichier eclipse_align.py.
 
 # Utilisation en 3 étapes
 
