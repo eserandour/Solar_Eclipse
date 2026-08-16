@@ -17,9 +17,3 @@ On peut utiliser Gimp pour calculer à la main les coordonnées du disque solair
 Options : --flip-horizontal --rotate90-cw
 
 <b>python3 eclipse_align.py video --input alignees/ --output eclipse.mp4 --fps 6</b>
-
-# Remarque
-
-Sous Linux, pour extraire des images d'une vidéo :<br>
-<b>ffmpeg -i video.mp4 image_%06d.bmp</b> (ou png) (toutes les images)<br>
-<b>ffmpeg -i video.mp4 -vf fps=6 image_%06d.bmp</b> (6 images par seconde)
