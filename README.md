@@ -22,4 +22,4 @@ Options : --flip-horizontal --rotate90-cw
 
 Sous Linux, pour extraire des images d'une vidéo :<br>
 <b>ffmpeg -i video.mp4 image_%06d.bmp</b> (ou png)<br>
-<b>ffmpeg -i video.mp4 -vf fps=1 image_%06d.bmp</b> (1 image par seconde)
+<b>ffmpeg -i video.mp4 -vf fps=6 image_%06d.bmp</b> (6 images par seconde)
